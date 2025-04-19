@@ -14,7 +14,7 @@ class TodoList(models.Model):
 
 
 class Tag(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
     class Meta:
         ordering = ["title"]
@@ -43,7 +43,6 @@ class Comment(models.Model):
         NOT_CONFIRMED = 'not_confirmed', 'Not confirmed'
         CONFIRMED = 'confirmed', 'Confirmed'
 
-    title = models.CharField(max_length=255)
     todo_item = models.ForeignKey(TodoItem, on_delete=models.CASCADE)
     body = models.TextField()
     status = models.CharField(choices=Status.choices, default=Status.NEED_TO_CHECK)
