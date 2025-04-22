@@ -31,10 +31,16 @@ class TodoListSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ["status", "todo_item", "body"]
+        fields = ["status", "todo_item", "assign", "body", "created_by"]
+        read_only_fields = ["created_by"]
 
 class TagSerializer(serializers.ModelSerializer):
     todo_item = ItemListSerializer(many=True, read_only=True)
     class Meta:
         model = Tag
         fields = ["title", "todo_item"]
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField(max_length=150, required=True)
+    password = serializers.CharField(max_length=150, required=True, write_only=True)
+
