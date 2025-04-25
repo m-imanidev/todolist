@@ -12,6 +12,7 @@ urlpatterns = [
     
     path('lists/<int:pk>/items', ItemListViews.as_view()),
     path('items/<int:id>', SingleItemListViews.as_view()),
+    
     path('comments/', CommentListViews.as_view()),
     path('comments/<int:pk>', SingleCommentViews.as_view()),
 

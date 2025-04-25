@@ -8,7 +8,8 @@ class ItemListSerializer(serializers.ModelSerializer):
     todo_list = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = TodoItem
-        fields = ["id", "title", "status", "todo_list", "body", "tags", "comments"]
+        fields = ["id", "title", "status", "todo_list", "assign", "body", "tags", "comments"]
+        read_only_fields = ["created_by"]
     def get_comments(self, obj):
         related_comments = Comment.objects.filter(todo_item=obj)
         return CommentSerializer(related_comments, many=True).data
@@ -31,7 +32,7 @@ class TodoListSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ["status", "todo_item", "assign", "body", "created_by"]
+        fields = ["id", "status", "todo_item", "body", "created_by"]
         read_only_fields = ["created_by"]
 
 class TagSerializer(serializers.ModelSerializer):
