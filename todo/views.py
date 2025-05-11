@@ -1,19 +1,26 @@
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response 
 from rest_framework import status
+
 from .serializers import TodoListSerializer, ItemListSerializer, TagSerializer, CommentSerializer
 from .models import TodoList, TodoItem, Tag, Comment
 
+@method_decorator(cache_page(1 * 60), name='dispatch')
 class TodoListViews(ListCreateAPIView):
     serializer_class = TodoListSerializer
     queryset = TodoList.objects.filter(is_active=True)
 
 class SingleTodoListViews(RetrieveUpdateDestroyAPIView):
     serializer_class = TodoListSerializer
+    import time
+    time.sleep(10)
+    print("hiii----------------")
     queryset = TodoList.objects.all()
     lookup_field = 'pk'
-
 
 
 class ItemListViews(ListCreateAPIView):
